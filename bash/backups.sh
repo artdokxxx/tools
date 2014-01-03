@@ -42,6 +42,8 @@ now_str=$(date +"%d-%m-%Y %H:%M")
 owner_group=$3
 
 clear_old () {
+    local now_str=$(date +"%d-%m-%Y %H:%M")
+
     echo " $now_str Start search old files and remove"
 
     if [ $# -lt 3 ]
@@ -91,6 +93,7 @@ for folder in $(ls $project_dir); do
             `tar -cf /$location_back/$NAME/$now.tar /tmp/backup/$NAME`
 
             `chown :$owner_group $location_back`
+            echo "$now" > /$location_back/$NAME/.backup_flag
 
             echo " ======== Finish backup project $NAME ==========="
             echo " !! Clear old backups for project $NAME !!"
@@ -104,3 +107,7 @@ for folder in $(ls $project_dir); do
         fi
     fi
 done
+
+now_str=$(date +"%d-%m-%Y %H:%M")
+echo "$now_str" > /$location_back/.backup_flag
+echo " !!!! $now_str - FINISH BUILD PROJECTS BACKUP !!!!"
