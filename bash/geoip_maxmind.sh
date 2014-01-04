@@ -23,6 +23,16 @@ check_install() {
     fi
 }
 
+if [ $# -lt 1 ]
+then
+    echo ' Error - incorect count parameters ($1 - dir for download)'
+
+    echo " Commandline parameters:"
+    echo $1 ' -> echo $1'
+
+    exit
+fi
+
 check_install gzip
 if [ $? -ne 0 ];
 then
@@ -37,10 +47,23 @@ then
     exit 1
 fi
 
-wget -P /etc/nginx/geo/ http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
-wget -P /etc/nginx/geo/ http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
-gunzip -f /etc/nginx/geo/GeoIP.dat.gz
-gunzip -f /etc/nginx/geo/GeoLiteCity.dat.gz
-echo "$now_str" > /etc/nginx/geo/.flag_start
+dir_download=$1
 
-echo "!!!! $now_str FINISH UPDATE GEOIP [MAXMIND] !!!!"
+if ! [ -d $1 ];
+then
+    echo " !!! ERROR - Not isset directory /etc/nginx/geo/ !!!"
+    exit 1
+fi
+
+echo " ==== Start remove old files ==== "
+rm $dir_download/*.gz > /dev/null
+rm $dir_download/*.gz.* > /dev/null
+echo " ==== Finish remove old files ==== "
+
+wget -P $dir_download http://geolite.maxmind.com/download/geoip/database/GeoLiteCountry/GeoIP.dat.gz
+wget -P $dir_download http://geolite.maxmind.com/download/geoip/database/GeoLiteCity.dat.gz
+gunzip -f $dir_download/GeoIP.dat.gz
+gunzip -f $dir_download/GeoLiteCity.dat.gz
+echo "$now_str" > $dir_download/.flag_start
+
+echo "!!!! $now_str FINISH UPDATE GEOIP, PATH - $1  [MAXMIND] !!!!"
