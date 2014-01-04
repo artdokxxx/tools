@@ -99,6 +99,7 @@ rm -f geo_files.tar.gz
 rm -f cidr_optim.txt
 rm -f cities.txt
 echo " ==== Finish remove tempory files ==== "
-
 nginx_reload
+
+echo "$now_str" > $dir_download/.flag_start
 echo "!!!! $now_str FINISH UPDATE GEOIP, PATH - $1  [IPGEOBASE] !!!!"
