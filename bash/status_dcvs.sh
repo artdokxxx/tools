@@ -47,5 +47,5 @@ for folder in $(ls $project_dir); do
 done
 
 now_str=$(date +"%d-%m-%Y %H:%M")
-echo " !!!! $now_str - START SCAN STATUS DCVS !!!!"
+echo " !!!! $now_str - FINISH SCAN STATUS DCVS !!!!"
 echo -e "\n"
