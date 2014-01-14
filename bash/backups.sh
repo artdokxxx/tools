@@ -76,8 +76,8 @@ clear_old () {
 
 echo " !!!! $now_str - START BUILD PROJECTS BACKUP !!!!"
 for folder in $(ls $project_dir); do
-    if test -e $project_dir$folder/.setting.back; then
-        . $project_dir$folder/.setting.back
+    if test -e $project_dir$folder/.project.setting; then
+        . $project_dir$folder/.project.setting
         if [ -n "$NAME" ]; then
             echo " ======== Start backup project $NAME ==========="
             `rm -rf /tmp/backup`
